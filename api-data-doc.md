@@ -123,7 +123,7 @@ http://api.travelpayouts.com/v2/prices/month-matrix?currency=usd&origin=LED&dest
         "distance":8015,
         "actual":true
     }]
-}
+}}
 
 #### Response parameters
  - **origin** — the point of departure.
