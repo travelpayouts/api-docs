@@ -39,7 +39,71 @@ Dates and times are given in UTC, formatted according to [ISO 8601](https://ru.w
 
 To obtain access to the API for searching for plane tickets and hotels, [send a request](https://support.travelpayouts.com/hc/en-us/requests/new).
 
-# Authentication
+## Flight price history
+
+Brings back the list of prices found by our users during the most recent 48 hours according to the filters used.
+
+### HTTP Request
+
+`GET http://api.travelpayouts.com/v2/prices/latest?currency=usd&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0&token=PutHereYourToken`
+
+### Request parameters
+
+Note! If the point of departure and the point of destination are not specified, the API shall bring back 30 of the cheapest tickets that have been found during the most recent 48 hours.
+
+Parameter | Default | Description
+--------- | ------- | -----------
+currency | RUB | The airline ticket’s currency.
+origin | - | The point of departure. The IATA city code or the country code. The length - from 2 to 3 symbols.
+destination | - | The point of destination. The IATA city code or the country code. The length - from 2 to 3 symbols.
+beginning_of_period | - | The beginning of the period, within which the dates of departure fall (in the YYYY-MM-DD format, for example, 2016-05-01). Must be specified if **period_type** is equal to month.
+period_type | - | The period for which the tickets have been found (the required parameter): **year** — for the whole time, **month** — for a month.
+one_way | false | **true** - one way, **false** - back-to-back.
+page | 1 | A page number.
+limit | 30 | The total number of records on a page. The maximum value - 1000e.
+show_to_affiliates | true | **false** - all the prices, **true** - just the prices, found using the partner marker (recommended).
+sorting | price | The assorting of prices: **price** — by the price. For the directions, only **city - city** assorting by the price is possible; **route** — by the popularity of a route; **distance_unit_price** — by the price for 1 km.
+trip_class | 0 | The flight class: **0** — Economy class; **1** — Business class; **2** — First.
+trip_duration | 1 | A page number.
+token | - | Individual affiliate token.
+
+```cURL
+curl --include --header "X-Access-Token: YOUR_API_TOKEN_HERE" "http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0"
+```
+
+```ruby
+require 'rubygems' if RUBY_VERSION < '1.9'
+require 'rest_client'
+
+headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
+response = RestClient.get "http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers
+puts response
+```
+
+```PHP
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+curl_setopt($ch, CURLOPT_HEADER, FALSE);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-Access-Token: YOUR_API_TOKEN_HERE"));
+$response = curl_exec($ch);
+curl_close($ch);
+
+var_dump($response);
+```
+
+```python
+from urllib2 import Request, urlopen
+headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
+request = Request("http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers=headers)
+response_body = urlopen(request).read()
+print response_body
+```
+
+Parameter | Default | Description
+--------- | ------- | -----------
+include_cats | false | If set to true, the result will also include cats.
+available | true | If set to false, the result will include kittens that have already been adopted.
 
 > To authorize, use this code:
 
