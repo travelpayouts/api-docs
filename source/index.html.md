@@ -2,13 +2,13 @@
 title: API Reference
 
 language_tabs:
-  - shell
+  - cURL
   - ruby
+  - PHP
   - python
-  - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
+  - <a href='https://www.travelpayouts.com/'>Sign Up for a Developer Token</a>
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -17,13 +17,27 @@ includes:
 search: true
 ---
 
-# Introduction
+# Data Access API
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Travelpayouts Data API – the way to get travel insights for your site or blog. You can get flight price trends and find popular destinations for your customers.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Dear partners! Attention, the data is transferred from the cache, so it is recommended to use them to generate static pages. 
 
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+To access the API you must pass your token in the X-Access-Token header or in the token parameter. To obtain a token for the Data Access API, go to http://www.travelpayouts.com/developers/api.
+
+Dates are accepted in the formats YYYY-MM and YYYY-MM-DD.
+
+The server response is always sent in json format with the following structure:
+
+  - **success** – true for successful request, false in case of errors;
+  - **data** – result of the request; in case of an error is equal to null;
+  - **error** – short description of the error that prevented request completion; for successful request is equal to null.
+
+Dates and times are given in UTC, formatted according to [ISO 8601](https://ru.wikipedia.org/wiki/ISO_8601). Prices are given in rubles as of when the ticket is put in the search results. It is not recommended to use expired prices (the approximate expiration date is given in the value of the expires_at parameter).
+
+**Important**. We strongly urge receiving data in compressed GZIP format, which saves a significant amount of time in receiving the response. To get data in compressed form, send the header Accept-Encoding: gzip, deflate.
+
+To obtain access to the API for searching for plane tickets and hotels, [send a request](https://support.travelpayouts.com/hc/en-us/requests/new).
 
 # Authentication
 
