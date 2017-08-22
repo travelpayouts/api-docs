@@ -57,17 +57,23 @@ Brings back the list of prices found by our users during the most recent 48 hour
 
 ```shell
 curl --request GET \
-  --url 	'http://api.travelpayouts.com/v2/prices/latest?currency=usd&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0' \
+  --url 'http://api.travelpayouts.com/v2/prices/latest?currency=usd&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0' \
   --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
 ```
 
 ```ruby
-require 'rubygems' if RUBY_VERSION < '1.9'
-require 'rest_client'
+require 'uri'
+require 'net/http'
 
-headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
-response = RestClient.get "http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers
-puts response
+url = URI("http://api.travelpayouts.com/v2/prices/latest?currency=usd&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
 ```
 
 ```php
@@ -101,11 +107,17 @@ if ($err) {
 ```
 
 ```python
-from urllib2 import Request, urlopen
-headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
-request = Request("http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers=headers)
-response_body = urlopen(request).read()
-print response_body
+import requests
+
+url = "http://api.travelpayouts.com/v2/prices/latest"
+
+querystring = {"currency":"usd","period_type":"year","page":"1","limit":"30","show_to_affiliates":"true","sorting":"price","trip_class":"0"}
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
 ```
 
 <aside class="notice">
@@ -184,12 +196,18 @@ curl --request GET \
 ```
 
 ```ruby
-require 'rubygems' if RUBY_VERSION < '1.9'
-require 'rest_client'
+require 'uri'
+require 'net/http'
 
-headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
-response = RestClient.get "http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers
-puts response
+url = URI("http://api.travelpayouts.com/v2/prices/month-matrix?currency=usd&show_to_affiliates=true&origin=LED&destination=HKT")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
 ```
 
 ```php
@@ -198,7 +216,7 @@ puts response
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "http://api.travelpayouts.com/v2/prices/latest?currency=usd&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0",
+  CURLOPT_URL => "http://api.travelpayouts.com/v2/prices/month-matrix?currency=usd&show_to_affiliates=true&origin=LED&destination=HKT",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -223,11 +241,17 @@ if ($err) {
 ```
 
 ```python
-from urllib2 import Request, urlopen
-headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
-request = Request("http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers=headers)
-response_body = urlopen(request).read()
-print response_body
+import requests
+
+url = "http://api.travelpayouts.com/v2/prices/month-matrix"
+
+querystring = {"currency":"usd","show_to_affiliates":"true","origin":"LED","destination":"HKT"}
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
 ```
 
 ### Request parameters
@@ -294,17 +318,23 @@ Brings the prices for the directions between the nearest to the target cities ba
 
 ```shell
 curl --request GET \
-  --url 'http://api.travelpayouts.com/v2/prices/month-matrix?currency=usd&show_to_affiliates=true&origin=LED&destination=HKT' \
+  --url 'http://api.travelpayouts.com/v2/prices/nearest-places-matrix?currency=usd&show_to_affiliates=true&origin=LED&destination=HKT' \
   --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
 ```
 
 ```ruby
-require 'rubygems' if RUBY_VERSION < '1.9'
-require 'rest_client'
+require 'uri'
+require 'net/http'
 
-headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
-response = RestClient.get "http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers
-puts response
+url = URI("http://api.travelpayouts.com/v2/prices/nearest-places-matrix?currency=usd&show_to_affiliates=true&origin=LED&destination=HKT")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
 ```
 
 ```php
@@ -313,7 +343,7 @@ puts response
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "http://api.travelpayouts.com/v2/prices/latest?currency=usd&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0",
+  CURLOPT_URL => "http://api.travelpayouts.com/v2/prices/nearest-places-matrix?currency=usd&show_to_affiliates=true&origin=LED&destination=HKT",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -338,11 +368,17 @@ if ($err) {
 ```
 
 ```python
-from urllib2 import Request, urlopen
-headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
-request = Request("http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers=headers)
-response_body = urlopen(request).read()
-print response_body
+import requests
+
+url = "http://api.travelpayouts.com/v2/prices/nearest-places-matrix"
+
+querystring = {"currency":"usd","show_to_affiliates":"true","origin":"LED","destination":"HKT"}
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
 ```
 
 ### Request parameters
@@ -431,17 +467,23 @@ Returns the cheapest non-stop tickets, as well as tickets with 1 or 2 stops, for
 
 ```shell
 curl --request GET \
-  --url 'http://api.travelpayouts.com/v2/prices/month-matrix?currency=usd&show_to_affiliates=true&origin=LED&destination=HKT' \
+  --url 'http://api.travelpayouts.com/v1/prices/cheap?origin=MOW&destination=HKT&depart_date=2017-11&return_date=2017-12' \
   --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
 ```
 
 ```ruby
-require 'rubygems' if RUBY_VERSION < '1.9'
-require 'rest_client'
+require 'uri'
+require 'net/http'
 
-headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
-response = RestClient.get "http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers
-puts response
+url = URI("http://api.travelpayouts.com/v1/prices/cheap?origin=MOW&destination=HKT&depart_date=2017-11&return_date=2017-12")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
 ```
 
 ```php
@@ -450,7 +492,7 @@ puts response
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "http://api.travelpayouts.com/v2/prices/latest?currency=usd&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0",
+  CURLOPT_URL => "http://api.travelpayouts.com/v1/prices/cheap?origin=MOW&destination=HKT&depart_date=2017-11&return_date=2017-12",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -475,11 +517,17 @@ if ($err) {
 ```
 
 ```python
-from urllib2 import Request, urlopen
-headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
-request = Request("http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers=headers)
-response_body = urlopen(request).read()
-print response_body
+import requests
+
+url = "http://api.travelpayouts.com/v1/prices/cheap"
+
+querystring = {"origin":"MOW","destination":"HKT","depart_date":"2017-11","return_date":"2017-12"}
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
 ```
 
 Parameter | Default | Description
@@ -556,17 +604,23 @@ Returns the cheapest non-stop tickets for the selected route with departure/retu
 
 ```shell
 curl --request GET \
-  --url 'http://api.travelpayouts.com/v2/prices/month-matrix?currency=usd&show_to_affiliates=true&origin=LED&destination=HKT' \
+  --url 'http://api.travelpayouts.com/v1/prices/cheap?origin=MOW&destination=HKT&depart_date=2017-11&return_date=2017-12' \
   --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
 ```
 
 ```ruby
-require 'rubygems' if RUBY_VERSION < '1.9'
-require 'rest_client'
+require 'uri'
+require 'net/http'
 
-headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
-response = RestClient.get "http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers
-puts response
+url = URI("http://api.travelpayouts.com/v1/prices/direct?origin=MOW&destination=LED&depart_date=2017-11&return_date=2017-12")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
 ```
 
 ```php
@@ -575,7 +629,7 @@ puts response
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "http://api.travelpayouts.com/v2/prices/latest?currency=usd&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0",
+  CURLOPT_URL => "http://api.travelpayouts.com/v1/prices/direct?origin=MOW&destination=LED&depart_date=2017-11&return_date=2017-12",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -600,11 +654,17 @@ if ($err) {
 ```
 
 ```python
-from urllib2 import Request, urlopen
-headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
-request = Request("http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers=headers)
-response_body = urlopen(request).read()
-print response_body
+import requests
+
+url = "http://api.travelpayouts.com/v1/prices/direct"
+
+querystring = {"origin":"MOW","destination":"LED","depart_date":"2017-11","return_date":"2017-12"}
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
 ```
 
 Parameter | Default | Description
@@ -663,17 +723,23 @@ Returns the cheapest non-stop, one-stop, and two-stop flights for the selected r
 
 ```shell
 curl --request GET \
-  --url 'http://api.travelpayouts.com/v2/prices/month-matrix?currency=usd&show_to_affiliates=true&origin=LED&destination=HKT' \
+  --url 'http://api.travelpayouts.com/v1/prices/calendar?depart_date=2017-11&origin=MOW&destination=BCN&calendar_type=departure_date&currency=USD' \
   --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
 ```
 
 ```ruby
-require 'rubygems' if RUBY_VERSION < '1.9'
-require 'rest_client'
+require 'uri'
+require 'net/http'
 
-headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
-response = RestClient.get "http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers
-puts response
+url = URI("http://api.travelpayouts.com/v1/prices/calendar?depart_date=2017-11&origin=MOW&destination=BCN&calendar_type=departure_date&currency=USD")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
 ```
 
 ```php
@@ -682,7 +748,7 @@ puts response
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "http://api.travelpayouts.com/v2/prices/latest?currency=usd&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0",
+  CURLOPT_URL => "http://api.travelpayouts.com/v1/prices/calendar?depart_date=2017-11&origin=MOW&destination=BCN&calendar_type=departure_date&currency=USD",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -707,11 +773,17 @@ if ($err) {
 ```
 
 ```python
-from urllib2 import Request, urlopen
-headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
-request = Request("http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers=headers)
-response_body = urlopen(request).read()
-print response_body
+import requests
+
+url = "http://api.travelpayouts.com/v1/prices/calendar"
+
+querystring = {"depart_date":"2017-11","origin":"MOW","destination":"BCN","calendar_type":"departure_date","currency":"USD"}
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
 ```
 
 Parameter | Default | Description
@@ -799,17 +871,23 @@ Returns routes for which an airline operates flights, sorted by popularity.
 
 ```shell
 curl --request GET \
-  --url 'http://api.travelpayouts.com/v2/prices/month-matrix?currency=usd&show_to_affiliates=true&origin=LED&destination=HKT' \
+  --url 'http://api.travelpayouts.com/v1/airline-directions?airline_code=SU&limit=10' \
   --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
 ```
 
 ```ruby
-require 'rubygems' if RUBY_VERSION < '1.9'
-require 'rest_client'
+require 'uri'
+require 'net/http'
 
-headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
-response = RestClient.get "http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers
-puts response
+url = URI("http://api.travelpayouts.com/v1/airline-directions?airline_code=SU&limit=10")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
 ```
 
 ```php
@@ -818,7 +896,7 @@ puts response
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "http://api.travelpayouts.com/v2/prices/latest?currency=usd&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0",
+  CURLOPT_URL => "http://api.travelpayouts.com/v1/airline-directions?airline_code=SU&limit=10",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -843,11 +921,17 @@ if ($err) {
 ```
 
 ```python
-from urllib2 import Request, urlopen
-headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
-request = Request("http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers=headers)
-response_body = urlopen(request).read()
-print response_body
+import requests
+
+url = "http://api.travelpayouts.com/v1/airline-directions"
+
+querystring = {"airline_code":"SU","limit":"10"}
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
 ```
 
 Parameter | Default | Description
@@ -898,17 +982,23 @@ Brings the prices for the nearest dates to the target ones back.
 
 ```shell
 curl --request GET \
-  --url 'http://api.travelpayouts.com/v2/prices/month-matrix?currency=usd&show_to_affiliates=true&origin=LED&destination=HKT' \
+  --url 'http://api.travelpayouts.com/v2/prices/week-matrix?currency=usd&origin=LED&destination=HKT&show_to_affiliates=true&depart_date=2017-11-04&return_date=2017-11-18' \
   --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
 ```
 
 ```ruby
-require 'rubygems' if RUBY_VERSION < '1.9'
-require 'rest_client'
+require 'uri'
+require 'net/http'
 
-headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
-response = RestClient.get "http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers
-puts response
+url = URI("http://api.travelpayouts.com/v2/prices/week-matrix?currency=usd&origin=LED&destination=HKT&show_to_affiliates=true&depart_date=2017-11-04&return_date=2017-11-18")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
 ```
 
 ```php
@@ -917,7 +1007,7 @@ puts response
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "http://api.travelpayouts.com/v2/prices/latest?currency=usd&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0",
+  CURLOPT_URL => "http://api.travelpayouts.com/v2/prices/week-matrix?currency=usd&origin=LED&destination=HKT&show_to_affiliates=true&depart_date=2017-11-04&return_date=2017-11-18",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -942,11 +1032,17 @@ if ($err) {
 ```
 
 ```python
-from urllib2 import Request, urlopen
-headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
-request = Request("http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers=headers)
-response_body = urlopen(request).read()
-print response_body
+import requests
+
+url = "http://api.travelpayouts.com/v2/prices/week-matrix"
+
+querystring = {"currency":"usd","origin":"LED","destination":"HKT","show_to_affiliates":"true","depart_date":"2017-11-04","return_date":"2017-11-18"}
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
 ```
 
 Parameter | Default | Description
@@ -1013,17 +1109,23 @@ Brings the most popular directions from a specified city back.
 
 ```shell
 curl --request GET \
-  --url 'http://api.travelpayouts.com/v2/prices/month-matrix?currency=usd&show_to_affiliates=true&origin=LED&destination=HKT' \
+  --url 'http://api.travelpayouts.com/v1/city-directions?origin=MOW&currency=usd' \
   --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
 ```
 
 ```ruby
-require 'rubygems' if RUBY_VERSION < '1.9'
-require 'rest_client'
+require 'uri'
+require 'net/http'
 
-headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
-response = RestClient.get "http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers
-puts response
+url = URI("http://api.travelpayouts.com/v1/city-directions?origin=MOW&currency=usd")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
 ```
 
 ```php
@@ -1032,7 +1134,7 @@ puts response
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "http://api.travelpayouts.com/v2/prices/latest?currency=usd&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0",
+  CURLOPT_URL => "http://api.travelpayouts.com/v1/city-directions?origin=MOW&currency=usd",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -1057,11 +1159,17 @@ if ($err) {
 ```
 
 ```python
-from urllib2 import Request, urlopen
-headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
-request = Request("http://api.travelpayouts.com/v2/prices/latest?currency=rub&period_type=year&page=1&limit=30&show_to_affiliates=true&sorting=price&trip_class=0", headers=headers)
-response_body = urlopen(request).read()
-print response_body
+import requests
+
+url = "http://api.travelpayouts.com/v1/city-directions"
+
+querystring = {"origin":"MOW","currency":"usd"}
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
 ```
 
 Parameter | Default | Description
@@ -1120,6 +1228,68 @@ The query returns a file with a list of countrys from the database.
 
 GET `http://api.travelpayouts.com/data/countries.json`
 
+```shell
+curl --request GET \
+  --url 'http://api.travelpayouts.com/data/countries.json' \
+  --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
+```
+
+```ruby
+import requests
+
+url = "http://api.travelpayouts.com/v1/city-directions"
+
+querystring = {"origin":"MOW","currency":"usd"}
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
+```
+
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://api.travelpayouts.com/data/countries.json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b"
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+```
+
+```python
+import requests
+
+url = "http://api.travelpayouts.com/data/countries.json"
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
 ### Response
 
 > The above command returns JSON structured like this:
@@ -1157,6 +1327,71 @@ The query returns a file with a list of cities from the database.
 ### HTTP Request
 
 GET `http://api.travelpayouts.com/data/cities.json`
+
+> Example of request:
+
+```shell
+curl --request GET \
+  --url 'http://api.travelpayouts.com/data/cities.json' \
+  --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("http://api.travelpayouts.com/data/cities.json")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://api.travelpayouts.com/data/cities.json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b"
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+```
+
+```python
+import requests
+
+url = "http://api.travelpayouts.com/data/cities.json"
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
 
 ### Response
 
@@ -1204,6 +1439,71 @@ The query returns a file with a list of airports from the database.
 ### HTTP Request
 
 GET `http://api.travelpayouts.com/data/airports.json`
+
+> Example of request:
+
+```shell
+curl --request GET \
+  --url 'http://api.travelpayouts.com/data/airports.json' \
+  --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("http://api.travelpayouts.com/data/airports.json")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://api.travelpayouts.com/data/airports.json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b"
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+```
+
+```python
+import requests
+
+url = "http://api.travelpayouts.com/data/airports.json"
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
 
 ### Response
 
@@ -1253,6 +1553,71 @@ The query returns a file with a list of airlines from the database.
 
 GET `http://api.travelpayouts.com/data/airlines.json`
 
+> Example of request:
+
+```shell
+curl --request GET \
+  --url 'http://api.travelpayouts.com/v1/city-directions?origin=MOW&currency=usd' \
+  --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("http://api.travelpayouts.com/data/airlines.json")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://api.travelpayouts.com/data/airlines.json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b"
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+```
+
+```python
+import requests
+
+url = "http://api.travelpayouts.com/data/airlines.json"
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
 ### Response
 
 > The above command returns JSON structured like this:
@@ -1289,6 +1654,61 @@ The query returns a file with a list of alliances from the database.
 
 GET `http://api.travelpayouts.com/data/airlines_alliances.json`
 
+> Example of request:
+
+```shell
+curl --request GET \
+  --url 'http://api.travelpayouts.com/data/airlines_alliances.json' \
+  --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
+```
+
+```ruby
+require 'rubygems' if RUBY_VERSION < '1.9'
+require 'rest_client'
+
+headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
+response = RestClient.get "http://api.travelpayouts.com/data/airlines_alliances.json", headers
+puts response
+```
+
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://api.travelpayouts.com/data/airlines_alliances.json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b"
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+```
+
+```python
+from urllib2 import Request, urlopen
+headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
+request = Request("http://api.travelpayouts.com/data/airlines_alliances.json", headers=headers)
+response_body = urlopen(request).read()
+print response_body
+```
+
 ### Response
 
 > The above command returns JSON structured like this:
@@ -1315,6 +1735,61 @@ The query returns a file with a list of airplanes from the database.
 
 GET `http://api.travelpayouts.com/data/planes.json`
 
+> Example of request:
+
+```shell
+curl --request GET \
+  --url 'http://api.travelpayouts.com/data/planes.json' \
+  --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
+```
+
+```ruby
+require 'rubygems' if RUBY_VERSION < '1.9'
+require 'rest_client'
+
+headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
+response = RestClient.get "http://api.travelpayouts.com/data/planes.json", headers
+puts response
+```
+
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://api.travelpayouts.com/data/planes.json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b"
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+```
+
+```python
+from urllib2 import Request, urlopen
+headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
+request = Request("http://api.travelpayouts.com/data/planes.json", headers=headers)
+response_body = urlopen(request).read()
+print response_body
+```
+
 ### Response
 
 > The above command returns JSON structured like this:
@@ -1333,13 +1808,68 @@ Parameter | Default | Description
  code | - | Plane IATA code.
  name | - | Plane name.
 
-## Data on the routes in json format
+## Routes list in json format
 
 The query returns a file with a list of routes from the database.
 
 ### HTTP Request
 
 GET `http://api.travelpayouts.com/data/planes.json`
+
+> Example of request:
+
+```shell
+curl --request GET \
+  --url 'http://api.travelpayouts.com/data/routes.json' \
+  --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
+```
+
+```ruby
+require 'rubygems' if RUBY_VERSION < '1.9'
+require 'rest_client'
+
+headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
+response = RestClient.get "http://api.travelpayouts.com/data/routes.json", headers
+puts response
+```
+
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://api.travelpayouts.com/data/routes.json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b"
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+```
+
+```python
+from urllib2 import Request, urlopen
+headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
+request = Request("http://api.travelpayouts.com/data/routes.json", headers=headers)
+response_body = urlopen(request).read()
+print response_body
+```
 
 ### Response
 
@@ -1383,6 +1913,61 @@ The query is returned the IATA-code and the name of nearest city from the user.
 
 GET `http://www.travelpayouts.com/whereami?locale=ru&callback=useriata&ip=62.105.128.0`
 
+> Example of request:
+
+```shell
+curl --request GET \
+  --url 'http://www.travelpayouts.com/whereami?locale=ru&callback=useriata&ip=62.105.128.0' \
+  --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
+```
+
+```ruby
+require 'rubygems' if RUBY_VERSION < '1.9'
+require 'rest_client'
+
+headers  = {:x_access_token => "YOUR_API_TOKEN_HERE"}
+response = RestClient.get "http://www.travelpayouts.com/whereami?locale=ru&callback=useriata&ip=62.105.128.0", headers
+puts response
+```
+
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://www.travelpayouts.com/whereami?locale=ru&callback=useriata&ip=62.105.128.0",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b"
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+```
+
+```python
+from urllib2 import Request, urlopen
+headers = {"X-Access-Token": "YOUR_API_TOKEN_HERE"}
+request = Request("http://www.travelpayouts.com/whereami?locale=ru&callback=useriata&ip=62.105.128.0", headers=headers)
+response_body = urlopen(request).read()
+print response_body
+```
+
 ### Request parameters
 
 Parameter | Default | Description
@@ -1413,6 +1998,71 @@ Brings the current rate of all popular currencies to RUB back.
 ### HTTP Request
 
 `GET http://yasen.aviasales.ru/adaptors/currency.json`
+
+> Example of request:
+
+```shell
+curl --request GET \
+  --url 'http://yasen.aviasales.ru/adaptors/currency.json'
+  --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("http://yasen.aviasales.ru/adaptors/currency.json")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://yasen.aviasales.ru/adaptors/currency.json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b"
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+```
+
+```python
+import requests
+
+url = "http://yasen.aviasales.ru/adaptors/currency.json"
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
 
 ### Response
 
