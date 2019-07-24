@@ -38,7 +38,7 @@ The server response is always sent in json format with the following structure:
 Dates and times are given in UTC, formatted according to [ISO 8601](https://ru.wikipedia.org/wiki/ISO_8601). Prices are given in rubles as of when the ticket is put in the search results. It is not recommended to use expired prices (the approximate expiration date is given in the value of the expires_at parameter).
 
 <aside class="warning">
-**Important**. We strongly urge receiving data in compressed GZIP format, which saves a significant amount of time in receiving the response. To get data in compressed form, send the header Accept-Encoding: gzip, deflate.
+Important. We strongly urge receiving data in compressed GZIP format, which saves a significant amount of time in receiving the response. To get data in compressed form, send the header Accept-Encoding: gzip, deflate.
 </aside>
 
 To obtain access to the API for searching for plane tickets and hotels, [send a request](https://support.travelpayouts.com/hc/en-us/requests/new).
@@ -121,7 +121,7 @@ print(response.text)
 ```
 
 <aside class="notice">
-**Note** If the point of departure and the point of destination are not specified, the API shall bring back 30 of the cheapest tickets that have been found during the most recent 48 hours.
+If the point of departure and the point of destination are not specified, the API shall bring back 30 of the cheapest tickets that have been found during the most recent 48 hours.
 </aside>
 
 Parameter | Default | Description
@@ -390,8 +390,8 @@ currency | RUB | The airline ticket’s currency
  destination | - | The point of destination. The IATA city code or the country code. The length - from 2 to 3 symbols.
  limit | - | The number of variants entered, from 1 to 20. Where 1 – is just the variant with the specified points of departure and the points of destination.
  show_to_affiliates | true | False - all the prices, true - just the prices, found using the partner marker (recommended).
-depart_date** *(optional)* | - | Day or month of departure (yyyy-mm-dd or yyyy-mm).
- return_date** *(optional)* | - | Day or month of return (yyyy-mm-dd or yyyy-mm).
+depart_date *(optional)* | - | Day or month of departure (yyyy-mm-dd or yyyy-mm).
+ return_date *(optional)* | - | Day or month of return (yyyy-mm-dd or yyyy-mm).
  flexibility | - | Expansion of the range of dates upward or downward. The value may vary from 0 to 7, where 0 shall show the variants for the dates specified, 7 – all the variants found for a week prior to the specified dates and a week after.
  distance | - | The number of variants entered, from 1 to 20. Where 1 – is just the variant with the specified points of departure and the points of destination.
  token | - | Individual affiliate token.
@@ -458,7 +458,7 @@ Returns the cheapest non-stop tickets, as well as tickets with 1 or 2 stops, for
 `GET http://api.travelpayouts.com/v1/prices/cheap?origin=MOW&destination=HKT&depart_date=2016-11&return_date=2016-12&token=PutHereYourToken`
 
 <aside class="warning">
-**Important** Old dates may be specified in a query. No error will be generated, but no data will be returned.
+Important Old dates may be specified in a query. No error will be generated, but no data will be returned.
 </aside>
 
 ### Request parameters
@@ -791,7 +791,7 @@ Parameter | Default | Description
 origin | - | IATA code of departure city. IATA code is shown by uppercase letters, for example MOW.
  destination | - | IATA code of destination city. IATA code is shown by uppercase letters, for example MOW.
  departure_date | - | Day or month of departure (yyyy-mm-dd or yyyy-mm).
- return_date** *(optional)* | - | Day or month of return (yyyy-mm-dd or yyyy-mm). **Pay attention!** If the return_date is not specified, you will get the "One way" flights.
+ return_date *(optional)* | - | Day or month of return (yyyy-mm-dd or yyyy-mm). **Pay attention!** If the return_date is not specified, you will get the "One way" flights.
  calendar_type | - | Field used to build the calendar. Equal to either: departure_date or return_date
  length *(optional)* | - |Length of stay in the destination city.
  token | - | Individual affiliate token.
@@ -856,6 +856,130 @@ Parameter | Default | Description
  departure_at | - | Departure Date.
  return_at | - | Return Date.
  expires_at | - | When the found price expires (UTC+0). 
+ 
+## Cheapest tickets grouped by month
+
+Returns the cheapest non-stop tickets, as well as tickets with 1 or 2 stops, for the selected route grouped by month.
+
+### HTTP Request
+
+`GET http://api.travelpayouts.com/v1/prices/monthly?currency=USD&origin=MOW&destination=HKT&token=PutHereYourToken`
+
+### Request parameters
+
+> Example of request:
+
+```shell
+curl --request GET \
+  --url 'http://api.travelpayouts.com/v1/prices/monthly?currency=USD&origin=MOW&destination=HKT' \
+  --header 'x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("http://api.travelpayouts.com/v1/prices/monthly?currency=USD&origin=MOW&destination=HKT")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["x-access-token"] = '321d6a221f8926b5ec41ae89a3b2ae7b'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "http://api.travelpayouts.com/v1/prices/monthly?currency=USD&origin=MOW&destination=HKT",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "x-access-token: 321d6a221f8926b5ec41ae89a3b2ae7b"
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+```
+
+```python
+import requests
+
+url = "http://api.travelpayouts.com/v1/prices/monthly"
+
+querystring = {"origin":"MOW","destination":"BCN","currency":"USD"}
+
+headers = {'x-access-token': '321d6a221f8926b5ec41ae89a3b2ae7b'}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
+```
+
+Parameter | Default | Description
+--------- | ------- | -----------
+origin | - | IATA code of departure city. IATA code is shown by uppercase letters, for example MOW.
+destination | - | IATA code of destination city. IATA code is shown by uppercase letters, for example MOW.
+currency | RUB | Currency of prices.
+token | - | Individual affiliate token.
+
+### Response
+
+> The above command returns JSON structured like this:
+
+```json
+{  
+   "success":true,
+   "data":{  
+      "2019-07":{  
+         "origin":"MOW",
+         "destination":"LON",
+         "price":166,
+         "transfers":1,
+         "airline":"W6",
+         "flight_number":7898,
+         "departure_at":"2019-07-31T14:10:00Z",
+         "return_at":"2019-08-31T19:15:00Z",
+         "expires_at":"2019-07-27T03:07:40Z"
+      }
+   },
+   "error":null,
+   "currency":"USD"
+}
+```
+
+### Response parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+ origin | - | IATA code of departure city.
+ destination | - | IATA code of destination city.
+ price | - | Ticket price in the specified currency.
+ transfers | - | Number of stops.
+ airline | - | IATA code of airline.
+ flight_number | - |Flight number.
+ departure_at | - | Departure Date.
+ return_at | - | Return Date.
+ expires_at | - | When the found price expires (UTC+0). 
+ currency | - | Currency of prices. 
 
 ## Popular airline routes
 
